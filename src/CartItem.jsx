@@ -9,27 +9,46 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    let total = 0;
+
+    cart.forEach(item => {
+    const quantity = item.quantity;
+    const cost = item.cost;
+    const price = parseFloat(cost.substring(1));
+    total += quantity * price;
+  });
+  return total; // Trả về tổng số tiền
   };
 
   const handleContinueShopping = (e) => {
-   
+    onContinueShopping(e)
+    alert('Functionality to be added for future reference');
   };
 
 
 
   const handleIncrement = (item) => {
+    dispatch(updateQuantity({ id: item.id, quantity: item.quantity + 1 }));
   };
 
   const handleDecrement = (item) => {
-   
+    if (item.quantity > 1) {
+        // Nếu số lượng lớn hơn 1, giảm số lượng đi 1
+        dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }));
+      } else {
+        // Nếu số lượng sẽ giảm xuống 0 (hiện tại là 1), loại bỏ mặt hàng khỏi giỏ hàng
+        dispatch(removeItem(item.id));
+      }
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item.id));
   };
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+    const price = parseFloat(item.cost.substring(1)); // Chuyển đổi giá chuỗi thành số
+    return (item.quantity * price).toFixed(2);
   };
 
   return (
