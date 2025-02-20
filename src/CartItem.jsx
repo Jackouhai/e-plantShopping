@@ -28,21 +28,21 @@ const CartItem = ({ onContinueShopping }) => {
 
 
   const handleIncrement = (item) => {
-    dispatch(updateQuantity({ id: item.id, quantity: item.quantity + 1 }));
+    dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
   };
 
   const handleDecrement = (item) => {
     if (item.quantity > 1) {
         // Nếu số lượng lớn hơn 1, giảm số lượng đi 1
-        dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }));
+        dispatch(updateQuantity({ item: item.name, quantity: item.quantity - 1 }));
       } else {
         // Nếu số lượng sẽ giảm xuống 0 (hiện tại là 1), loại bỏ mặt hàng khỏi giỏ hàng
-        dispatch(removeItem(item.id));
+        dispatch(removeItem(item.n));
       }
   };
 
   const handleRemove = (item) => {
-    dispatch(removeItem(item.id));
+    dispatch(removeItem(item.name));
   };
 
   // Calculate total cost based on quantity for an item
